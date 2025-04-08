@@ -21,6 +21,11 @@ pip install -r requirements.txt
 - `python client.py http://localhost:8000/sse`
 
 
+## Run demo host (langchain/langgraph)
+> You need to run ollama and download a model
+- `python host_langchain.py llama3.3 http://localhost:11434`
+
+
 ## Debug
 - Open a new terminal and run `npx @modelcontextprotocol/inspector`
 - Point browser to http://127.0.0.1:6274 

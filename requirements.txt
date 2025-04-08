@@ -8,6 +8,9 @@ httpx==0.28.1
 httpx-sse==0.4.0
 idna==3.10
 markdown-it-py==3.0.0
+langchain-mcp-adapters==0.0.7
+langchain-ollama==0.3.1
+langgraph-prebuilt==0.1.8
 mcp==1.6.0
 mdurl==0.1.2
 pydantic==2.11.2
