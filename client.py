@@ -2,6 +2,7 @@
 import os
 import asyncio
 import sys
+import requests
 from typing import Any
 from urllib.parse import urlparse
 
@@ -25,18 +26,15 @@ def print_items(name: str, result: Any) -> None:
         print("No items available")
 
 
-async def main(server_url: str):
+async def main(server_url: str, headers: dict[str, Any] | None = None):
     """Connect to MCP server and list its capabilities.
 
     Args:
         server_url: Full URL to SSE endpoint (e.g. http://localhost:8000/sse)
     """
-    if urlparse(server_url).scheme not in ("http", "https"):
-        print("Error: Server URL must start with http:// or https://")
-        sys.exit(1)
 
     try:
-        async with sse_client(server_url) as streams:
+        async with sse_client(server_url, headers) as streams:
             async with ClientSession(streams[0], streams[1]) as session:
                 await session.initialize()
                 print("Connected to MCP server at", server_url)
@@ -73,4 +71,19 @@ if __name__ == "__main__":
         print("Example: python {} http://localhost:8000/sse".format(filename))
         sys.exit(1)
 
-    asyncio.run(main(sys.argv[1]))
+    urlparsed = urlparse(sys.argv[1])
+    if urlparsed.scheme not in ("http", "https"):
+        print("Error: Server URL must start with http:// or https://")
+        sys.exit(1)
+
+    headers = {}
+    try:
+        r = requests.get(
+            urlparsed.scheme + '://' + urlparsed.netloc + '/get_token'
+        )
+        json_response = r.json()
+        headers['Authorization'] = "Bearer " + json_response["token"]
+    except Exception:
+        print("Can not use auth endpoint")
+
+    asyncio.run(main(sys.argv[1], headers))

@@ -13,8 +13,10 @@ python3 -m venv .venv
 pip install -r requirements.txt
 ```
 
+
 ## Run Server
-- `python server.py`
+> You can use any of this two servers
+- `python server.py` or with jwt auth `python server_asgi.py`
 
 
 ## Run demo client
@@ -27,6 +29,7 @@ pip install -r requirements.txt
 
 
 ## Debug
+> You can debug server with this app
 - Open a new terminal and run `npx @modelcontextprotocol/inspector`
 - Point browser to http://127.0.0.1:6274 
 - Change Transport Type to `SSE`
