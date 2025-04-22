@@ -49,4 +49,5 @@ def review_code(code: str) -> str:
     return f"Please review this code:\n\n{code}"
 
 
-mcp.run(transport="sse")
+if __name__ == "__main__":
+    mcp.run(transport="sse")
